@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center><h1><span class="badge rounded-pill bg-light text-dark">Customers</span></h1></center>
+
+{% if edit_customer %}
+    <p class="mt-4">Editing</p>
+
+<form id="edit_customer" method="post">
+              {% csrf_token %}
+              {{form_customer}}
+</form>
+<button form="edit_customer" type="submit" class="btn btn-primary mt-4">Edit</button>
+{% else %}
+
+<table class="table table-success table-striped mt-4">
+<tr><th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Address</th>
+    <th>Birthdate</th>
+    {% if request.user.groups.all.0.name != 'Worker' %}
+        <th>Edit</th>
+        {% if request.user.groups.all.0.name != 'Reception' %}
+            <th>Delete</th>
+        {% endif %}
+    {% endif %}
+
+</tr> <!--ряд с ячейками заголовков-->
+    {% for el in customer %}
+        <tr><td>{{ el.Name }}</td>
+            <td>{{ el.Email }}</td>
+            <td>{{ el.Phone }}</td>
+            <td>{{ el.Address }}</td>
+            <td>{{ el.Birthdate }}</td>
+            {% if request.user.groups.all.0.name != 'Worker' %}
+                <td><a href="{% url 'edit_customer' el.id %}">Edit</a></td>
+                {% if request.user.groups.all.0.name != 'Reception' %}
+                    <td><a href="{% url 'delete_customer' el.id %}">Delete</a></td>
+                {% endif %}
+            {% endif %}
+        </tr> <!--ряд с ячейками тела таблицы-->
+    {% endfor %}
+</table>
+{% endif %}
+
+<!-- Button trigger modal -->
+{% if request.user.groups.all.0.name != 'Worker' %}
+
+<p align="right">
+    <button type="button" class="btn btn-outline-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add new customer
+    </button>
+</p>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add customer</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form id="add_customer" method="post">
+              {% csrf_token %}
+              {{form_customer}}
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button form="add_customer" type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-success table-striped">
+<tr><th>Car</th>
+    <th>User</th>
+    <th>Date</th>
+    <th>Amount($)</th>
+    <th>Status</th>
+    <th>Status</th>
+</tr> <!--ряд с ячейками заголовков-->
+    <tr><td>{{ Order.car }}</td>
+        <td>{{ Order.user }}</td>
+        <td>{{ Order.date }}</td>
+        <td>{{ Order.amount }}</td>
+        <td>{{ Order.status }}</td>
+        <td>{{ Order.status }}</td>
+    </tr> <!--ряд с ячейками тела таблицы-->
+
+</table>
+
+{% endblock %}

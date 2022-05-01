@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<center><h1><span class="badge rounded-pill bg-light text-dark">Orders</span></h1></center>
+
+{% if details %}
+<table class="table table-success table-striped">
+<tr><th>Car</th>
+    <th>User</th>
+    <th>Date</th>
+    <th>Amount($)</th>
+    <th>Status</th>
+</tr> <!--ряд с ячейками заголовков-->
+    <tr><td>{{ det_order.car }}</td>
+        <td>{{ det_order.user }}</td>
+        <td>{{ det_order.date }}</td>
+        <td>{{ det_order.amount }}</td>
+        <td>{{ det_order.status }}</td>
+    </tr>
+</table>
+{% else %}
+
+{% if order_edit %}
+    <p class="mt-4">Editing</p>
+
+
+<form id="edit_order" method="post">
+              {% csrf_token %}
+              {{form_order}}
+</form>
+<button form="edit_order" type="submit" class="btn btn-primary mt-4">Edit</button>
+{% else %}
+
+<table class="table table-success table-striped">
+<tr><th>Car</th>
+    <th>User</th>
+    <th>Status</th>
+    {% if request.user.groups.all.0.name != 'Worker' %}
+        <th>Edit</th>
+        {% if request.user.groups.all.0.name != 'Reception' %}
+
+        <th>Delete</th>
+    {% endif %}
+    {% endif %}
+</tr> <!--ряд с ячейками заголовков-->
+    {% for el in order %}
+        <tr><td><a href="{% url 'order_details' el.id %}">{{ el.car }}</a></td>
+            <td>{{ el.user }}</td>
+            <td>{{ el.status }}</td>
+            {% if request.user.groups.all.0.name != 'Worker' %}
+                <td><a href="{% url 'edit_customer' el.id %}">Edit</a></td>
+                {% if request.user.groups.all.0.name != 'Reception' %}
+                    <td><a href="{% url 'delete_order' el.id %}">Delete</a></td>
+                {% endif %}
+            {% endif %}
+        </tr> <!--ряд с ячейками тела таблицы-->
+    {% endfor %}
+</table>
+
+{% if request.user.groups.all.0.name != 'Worker' %}
+<p align="right">
+    <button type="button" class="btn btn-outline-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add new order
+    </button>
+</p>
+{% endif %}
+{% endif %}
+{% endif %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form id="add_order" method="post">
+              {% csrf_token %}
+              {{form_order}}
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button form="add_order" type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}
