@@ -76,13 +76,16 @@ def edit_customer(request, pk):
     return render(request, 'customer.html', {'get_customer': get_customer,
                                              'edit_customer': True,
                                              'form_customer': CustomerForm(instance=get_customer)})
-def order_details(request,pk):
+
+
+def order_details(request, pk):
     order = Order.objects.get(pk=pk)
 
     print(order)
 
     return render(request, 'order.html', {'det_order': order,
                                           'details': True})
+
 
 def edit_car(request, pk):
     get_car = Car.objects.get(pk=pk)
@@ -109,15 +112,18 @@ def edit_order(request, pk):
                                           'edit_order': True,
                                           'form_order': CustomerForm(instance=get_order)})
 
+
 def delete_customer(request, pk):
     get_customer = Customer.objects.get(pk=pk)
     get_customer.delete()
     return redirect(reverse("customer_home"))
 
+
 def delete_car(request, pk):
     get_car = Car.objects.get(pk=pk)
     get_car.delete()
     return redirect(reverse("car_home"))
+
 
 def delete_order(request, pk):
     get_order = Order.objects.get(pk=pk)
