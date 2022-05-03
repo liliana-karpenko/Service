@@ -36,12 +36,14 @@
         <td>{{ el.Phone }}</td>
         <td>{{ el.Address }}</td>
         <td>{{ el.Birthdate }}</td>
-        {% if request.user.groups.all.0.name != 'Worker' %}
+
+        {% if role != 'Worker' %}
         <td><a href="{% url 'edit_customer' el.id %}">Edit</a></td>
-        {% if request.user.groups.all.0.name != 'Reception' %}
+        {% if role != 'Reception' %}
         <td><a href="{% url 'delete_customer' el.id %}">Delete</a></td>
         {% endif %}
         {% endif %}
+
     </tr> <!--ряд с ячейками тела таблицы-->
     {% endfor %}
 </table>

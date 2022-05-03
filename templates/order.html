@@ -40,9 +40,9 @@
         <th>Car</th>
         <th>User</th>
         <th>Status</th>
-        {% if request.user.groups.all.0.name != 'Worker' %}
+        {% if role != 'Worker' %}
         <th>Edit</th>
-        {% if request.user.groups.all.0.name != 'Reception' %}
+        {% if role != 'Reception' %}
 
         <th>Delete</th>
         {% endif %}
@@ -53,9 +53,9 @@
         <td><a href="{% url 'order_details' el.id %}">{{ el.Car }}</a></td>
         <td>{{ el.User }}</td>
         <td>{{ el.Status }}</td>
-        {% if request.user.groups.all.0.name != 'Worker' %}
+        {% if role != 'Worker' %}
         <td><a href="{% url 'edit_customer' el.id %}">Edit</a></td>
-        {% if request.user.groups.all.0.name != 'Reception' %}
+        {% if role != 'Reception' %}
         <td><a href="{% url 'delete_order' el.id %}">Delete</a></td>
         {% endif %}
         {% endif %}
@@ -63,7 +63,7 @@
     {% endfor %}
 </table>
 
-{% if request.user.groups.all.0.name != 'Worker' %}
+{% if role != 'Worker' %}
 <p align="right">
     <button type="button" class="btn btn-outline-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Add new order

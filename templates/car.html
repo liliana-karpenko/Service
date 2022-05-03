@@ -20,9 +20,9 @@
         <th>Manufacturer</th>
         <th>Model</th>
         <th>Year Of Manufacture</th>
-        {% if request.user.groups.all.0.name != 'Worker' %}
+        {% if role != 'Worker' %}
         <th>Edit</th>
-        {% if request.user.groups.all.0.name != 'Reception' %}
+        {% if role != 'Reception' %}
         <th>Delete</th>
         {% endif %}
         {% endif %}
@@ -33,9 +33,9 @@
         <td>{{ el.Manufacturer }}</td>
         <td>{{ el.Model }}</td>
         <td>{{ el.YearOfManufacture }}</td>
-        {% if request.user.groups.all.0.name != 'Worker' %}
+        {% if role != 'Worker' %}
         <td><a href="{% url 'edit_car' el.id %}">Edit</a></td>
-        {% if request.user.groups.all.0.name != 'Reception' %}
+        {% if role != 'Reception' %}
         <td><a href="{% url 'delete_car' el.id %}">Delete</a></td>
         {% endif %}
         {% endif %}
@@ -44,7 +44,7 @@
 </table>
 {% endif %}
 
-{% if request.user.groups.all.0.name != 'Worker' %}
+{% if role != 'Worker' %}
 <p align="right">
     <button type="button" class="btn btn-outline-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Add new car

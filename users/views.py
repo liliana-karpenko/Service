@@ -1,42 +1,63 @@
+from cProfile import Profile
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .forms import CustomerForm, CarForm, OrderForm
 from users.forms import UserCreationForm
-from .models import Customer, Car, Order
+from .models import Customer, Car, Order , User
 from django.urls import reverse
 from django.contrib.auth.models import Group
 
 
+
 def customer_home(request):
     customer = Customer.objects.all()
+    if request.user.is_anonymous:
+        role = 'anonymous'
+    else:
+        role = Group.objects.filter(user = request.user)[0].name
+    print(role == "admin")
+
     if request.method == 'POST':
         form = CustomerForm(request.POST)
         if form.is_valid():
             form.save()
         print(form.is_valid())
     return render(request, 'customer.html', {'customer': customer,
-                                             'form_customer': CustomerForm()})
+                                             'form_customer': CustomerForm(),
+                                             'role': role})
 
 
 def car_home(request):
     car = Car.objects.all()
+    if request.user.is_anonymous:
+        role = 'anonymous'
+    else:
+        role = Group.objects.filter(user = request.user)[0].name
+    print(role == "admin")
     if request.method == 'POST':
         form = CarForm(request.POST)
         if form.is_valid():
             form.save()
     return render(request, 'car.html', {'car': car,
-                                        'form_car': CarForm()})
+                                        'form_car': CarForm(),
+                                        'role': role})
 
 
 def order_home(request):
+    if request.user.is_anonymous:
+        role = 'anonymous'
+    else:
+        role = Group.objects.filter(user = request.user)[0].name
+    print(role == "admin")
     order = Order.objects.all()
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             form.save()
     return render(request, 'order.html', {'order': order,
-                                          'form_order': OrderForm()})
+                                          'form_order': OrderForm(),
+                                            'role': role})
 
 
 class Register(View):
