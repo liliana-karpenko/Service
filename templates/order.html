@@ -15,11 +15,11 @@
         <th>Status</th>
     </tr> <!--ряд с ячейками заголовков-->
     <tr>
-        <td>{{ det_order.car }}</td>
-        <td>{{ det_order.user }}</td>
-        <td>{{ det_order.date }}</td>
-        <td>{{ det_order.amount }}</td>
-        <td>{{ det_order.status }}</td>
+        <td>{{ det_order.Car }}</td>
+        <td>{{ det_order.User }}</td>
+        <td>{{ det_order.Date }}</td>
+        <td>{{ det_order.Amount }}</td>
+        <td>{{ det_order.Status }}</td>
     </tr>
 </table>
 {% else %}
@@ -50,9 +50,9 @@
     </tr> <!--ряд с ячейками заголовков-->
     {% for el in order %}
     <tr>
-        <td><a href="{% url 'order_details' el.id %}">{{ el.car }}</a></td>
-        <td>{{ el.user }}</td>
-        <td>{{ el.status }}</td>
+        <td><a href="{% url 'order_details' el.id %}">{{ el.Car }}</a></td>
+        <td>{{ el.User }}</td>
+        <td>{{ el.Status }}</td>
         {% if request.user.groups.all.0.name != 'Worker' %}
         <td><a href="{% url 'edit_customer' el.id %}">Edit</a></td>
         {% if request.user.groups.all.0.name != 'Reception' %}

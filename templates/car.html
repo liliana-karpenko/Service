@@ -29,10 +29,10 @@
     </tr> <!--ряд с ячейками заголовков-->
     {% for el in car %}
     <tr>
-        <td>{{ el.owner }}</td>
-        <td>{{ el.manufacturer }}</td>
-        <td>{{ el.model }}</td>
-        <td>{{ el.yearOfManufacture }}</td>
+        <td>{{ el.Owner }}</td>
+        <td>{{ el.Manufacturer }}</td>
+        <td>{{ el.Model }}</td>
+        <td>{{ el.YearOfManufacture }}</td>
         {% if request.user.groups.all.0.name != 'Worker' %}
         <td><a href="{% url 'edit_car' el.id %}">Edit</a></td>
         {% if request.user.groups.all.0.name != 'Reception' %}
