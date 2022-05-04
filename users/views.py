@@ -16,13 +16,11 @@ def customer_home(request):
         role = 'anonymous'
     else:
         role = Group.objects.filter(user = request.user)[0].name
-    print(role == "admin")
 
     if request.method == 'POST':
         form = CustomerForm(request.POST)
         if form.is_valid():
             form.save()
-        print(form.is_valid())
     return render(request, 'customer.html', {'customer': customer,
                                              'form_customer': CustomerForm(),
                                              'role': role})
@@ -34,7 +32,6 @@ def car_home(request):
         role = 'anonymous'
     else:
         role = Group.objects.filter(user = request.user)[0].name
-    print(role == "admin")
     if request.method == 'POST':
         form = CarForm(request.POST)
         if form.is_valid():
@@ -49,7 +46,6 @@ def order_home(request):
         role = 'anonymous'
     else:
         role = Group.objects.filter(user = request.user)[0].name
-    print(role == "admin")
     order = Order.objects.all()
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -101,8 +97,6 @@ def edit_customer(request, pk):
 
 def order_details(request, pk):
     order = Order.objects.get(pk=pk)
-
-    print(order)
 
     return render(request, 'order.html', {'det_order': order,
                                           'details': True})
