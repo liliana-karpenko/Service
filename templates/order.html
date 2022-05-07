@@ -24,9 +24,8 @@
 </table>
 {% else %}
 
-{% if order_edit %}
+{% if edit_order %}
 <p class="mt-4">Editing</p>
-
 
 <form id="edit_order" method="post">
     {% csrf_token %}
@@ -43,7 +42,6 @@
         {% if role != 'Worker' %}
         <th>Edit</th>
         {% if role != 'Reception' %}
-
         <th>Delete</th>
         {% endif %}
         {% endif %}
@@ -54,7 +52,7 @@
         <td>{{ el.User }}</td>
         <td>{{ el.Status }}</td>
         {% if role != 'Worker' %}
-        <td><a href="{% url 'edit_customer' el.id %}">Edit</a></td>
+        <td><a href="{% url 'edit_order' el.id %}">Edit</a></td>
         {% if role != 'Reception' %}
         <td><a href="{% url 'delete_order' el.id %}">Delete</a></td>
         {% endif %}

@@ -1,8 +1,5 @@
 from django.urls import path, include
 from users.views import Register
-
-from django.views.generic import TemplateView
-from . import views
 from .views import customer_home, car_home, order_home, order_details, edit_customer, edit_order, edit_car, \
     delete_customer, delete_car, delete_order
 
@@ -21,3 +18,4 @@ urlpatterns = [
     path('delete_order/<int:pk>', delete_order, name='delete_order'),
 
 ]
+
